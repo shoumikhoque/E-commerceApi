@@ -1,0 +1,259 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /valTrx/{TrxID}:
+    x-swagger-router-controller: account
+    get:
+      operationId: valTrx
+      description: get an account
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: TrxID
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetTrxResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /transaction :
+    x-swagger-router-controller: account
+    post :
+      operationId : saveTx
+      description: add a  Tx to the list
+      # movie info to be stored
+      parameters:
+        - name: to
+          description: account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralTxResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /account :
+    x-swagger-router-controller: account
+    get:
+      operationId : getAll
+      description: get the accounts list
+      # define the type of response for Success "200" and Error
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetAccountsListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: save
+      description: add a new movie to the list
+      # movie info to be stored
+      parameters:
+        - name: name
+          description: account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /account/{accNo}:
+    x-swagger-router-controller: account
+    get:
+      operationId: getOne
+      description: get an account
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: accNo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetAccountResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      operationId: update
+      description: update a movie
+      # define the parameters
+      parameters:
+        - name: accNo
+          description: Account number
+          type: string
+          in: path
+          required: true
+        - name: name
+          description: Account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  GeneralTxResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  GetTrxResponse:
+    required:
+      - trxID
+      - to
+      - from
+      - amount
+    properties:
+      trxID: 
+        type: string
+      to:
+        type: string
+      from:
+        type: string
+      amount :
+        type: string
+  GetAccountResponse:
+    required:
+      - name
+      - pass
+      - accNo
+    properties:
+      name: 
+        type: string
+      pass:
+        type: string
+      accNo:
+        type: string
+  Account:
+    type: object
+    properties:
+      name:
+        type: string
+        description: task object name
+      accNo:
+        type: string
+        description: task description
+      pass: 
+        type : string
+        description: task description
+    required:
+      - name
+      - pass
+
+  Transaction:
+    type: object
+    properties:
+      to:
+        type: string
+        description: task object name
+      from:
+        type: string
+        description: task description
+      amount: 
+        type : string
+        description: task description
+    required:
+      - to
+      - from
+      - amount
+  
+  GetAccountsListResponse:
+    required:
+      - accounts
+    properties:
+      # The array of movies
+      accounts:
+        type: array
+        items: 
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            accNo:
+              type: string
+            pass:
+              type: string
+            balance:
+              type : number
+
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
