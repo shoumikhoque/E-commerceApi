@@ -18,34 +18,68 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
+  /products :
+    x-swagger-router-controller: product
+    post:
+      operationId: save
+      description: add a new movie to the list
+      # movie info to be stored
       parameters:
         - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
+          description: account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Product"
       responses:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
+            $ref: "#/definitions/GeneralResponse"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+        
+  
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  Product:
+    type: object
+    properties:
+      name:
+        type: string
+        description: task object name
+      productId:
+        type: string
+        description: task description
+      amount: 
+        type : number
+        description: task description
+      price:
+        type: number
+      url:
+        type: string
+    required:
+      - name
+      - amount
+      - price
+      - url
+      
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
   HelloWorldResponse:
     required:
       - message
