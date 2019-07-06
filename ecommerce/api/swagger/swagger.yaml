@@ -1,0 +1,116 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:3000
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /reg:
+    x-swagger-router-controller: ecom
+    post:
+      operationId: save
+      description: add a new user to the list
+      # movie info to be stored
+      parameters:
+        - name: email
+          description: account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /login/{email}:
+    x-swagger-router-controller: ecom
+    get:
+      operationId: getOne
+      description: get user account info
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: email
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetAccountResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  Account:
+    type: object
+    properties:
+      name:
+        type: string
+        description: task object name
+      email:
+        type: string
+        description: task description
+      pass: 
+        type : string
+        description: task description
+      bankAccNo: 
+        type : string
+        description: task description
+    required:
+      - name
+      - pass
+      - email
+      - bankAccNo
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  GetAccountResponse:
+    required:
+      - name
+      - pass
+    properties:
+      name: 
+        type: string
+      pass:
+        type: string
+      
+      email:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
