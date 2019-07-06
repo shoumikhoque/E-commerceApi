@@ -18,15 +18,63 @@ consumes:
 produces:
   - application/json
 paths:
+  /sendProduct/{productId}:
+    x-swagger-router-controller: product
+    put:
+      operationId: update
+      description: update a product amount after sending
+      # define the parameters
+      parameters:
+        - name: productId
+          description: Account number
+          type: string
+          in: path
+          required: true
+        - name: name
+          description: Account properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ProductAmountResponse"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
+  /products/{productId}:
+    x-swagger-router-controller: product
+    get:
+      operationId: getOne
+      description: get a product using productId
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: productId
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetProductResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /products :
     x-swagger-router-controller: product
     post:
       operationId: save
-      description: add a new movie to the list
+      description: add a new product to the list
       # movie info to be stored
       parameters:
         - name: name
-          description: account properties
+          description: product properties
           in: body
           required: true
           schema:
@@ -46,6 +94,45 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  GetProductResponse:
+    required:
+      - name
+      - productId
+      - amount
+      - price
+      - url
+    properties:
+      name:
+        type: string
+        description: task object name
+      productId:
+        type: string
+        description: task description
+      amount: 
+        type : number
+        description: task description
+      price:
+        type: number
+      url:
+        type: string
+  ProductAmountResponse:
+    type: object
+    properties:
+      name:
+        type: string
+        description: task object name
+      productId:
+        type: string
+        description: task description
+      amount: 
+        type : number
+        description: task description
+      price:
+        type: number
+      url:
+        type: string
+    required:
+      - amount
   Product:
     type: object
     properties:
@@ -80,12 +167,6 @@ definitions:
     required:
       - success
       - description
-  HelloWorldResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
   ErrorResponse:
     required:
       - message
