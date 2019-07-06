@@ -1,4 +1,4 @@
-module.exports = { save, getOne ,update};
+module.exports = { save, getOne ,update,getAll};
 var crypto = require("crypto");
 var db = require("../../config/db")();
 const mongo = require("mongodb").MongoClient;
@@ -27,6 +27,14 @@ function getOne(req, res, next) {
     } else {
       res.status(204).send();
     }
+  });
+}
+function getAll(req, res, next) {
+  db.find(null, function(items) {
+    console.log(items);
+    // var json = JSON.stringify(items);
+
+    res.json(items);
   });
 }
 function update(req, res, next) {

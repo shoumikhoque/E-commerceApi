@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: Hello World App
 # during dev, should point to your local machine
-host: localhost:10010
+host: localhost:5000
 # basePath prefixes all resource paths 
 basePath: /
 # 
@@ -68,6 +68,19 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /products :
     x-swagger-router-controller: product
+    get:
+      operationId : getAll
+      description: get the accounts list
+      # define the type of response for Success "200" and Error
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetProductsListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       operationId: save
       description: add a new product to the list
@@ -94,6 +107,26 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  GetProductsListResponse:
+    required:
+      - products
+    properties:
+      # The array of movies
+      products:
+        type: array
+        items: 
+          type: object
+          properties:
+            name:
+              type: string
+            productID:
+              type: string
+            price:
+              type : number
+            amount:
+              type: number
+            url:
+              type: string
   GetProductResponse:
     required:
       - name
