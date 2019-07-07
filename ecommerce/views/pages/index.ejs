@@ -2,209 +2,33 @@
 <html>
 
 <head>
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <style>
-    body {
-      background-color: rgb(82, 164, 231)
-    }
-
-    .container {
-      width: inherit;
-
-    }
-
-    .price-tag {
-      color: royalblue
-    }
-
-    img {
-      display: block;
-      width: 256px;
-      height: 256px;
-    }
-  </style>
-  <link rel="stylesheet" href="style.css" />
+  <% include ../partials/head %>
 </head>
 
 <body>
 
-
   <!-- main navbar starts -->
   <nav>
-    <div class="nav-wrapper blue z-depth-3">
-      <a href="#" class="brand-logo center large">Buy Car</a>
-      <ul id="nav-mobile" class="right">
-        <li><a href="#SignIn" data-target="SignIn"
-            class=" z-depth-5 light-blue btn btn-large waves-effect waves-light modal-trigger tooltipped"
-            data-tooltip="Account" data-position="bottom"><i class="large material-icons">account_circle</i></a></li>
-      </ul>
-    </div>
+    <% include ../partials/nav %>
   </nav>
   <!-- main navbar ends -->
   <!-- sidenav bar starts -->
-  <ul id="slide-out" class="sidenav">
-    <div class=" center">
-      <h5>Your Cart</h5>
-    </div>
-
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <a href="#" data-target="slide-out"
-    class="sidenav-trigger  z-depth-5 red btn btn-large waves-effect waves-light tooltipped " data-tooltip="Cart"
-    data-activates="slide-out" data-position="bottom"><i class="material-icons">shopping_cart</i></a>
+  <% include ../partials/sidenav %>
   <!-- sidenav bar ends -->
   <!-- Modal Structures -->
   <!-- Sign-in form start -->
-  <div id="SignIn" class="modal">
-    <div class="modal-content">
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s12">
-              <input id="last_name" type="text" class="validate">
-              <label for="last_name">Last Name</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="email" type="email" class="validate">
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
-              <label for="password">Password</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="email" type="email" class="validate">
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="contact" type="tel" class="validate">
-              <label for="Contact">Contact </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <textarea id="address" class="materialize-textarea"></textarea>
-              <label for="address">Address</label>
-            </div>
-          </div>
-          <div class="row right-align">
-            <div class="input-field col s12">
-              <button class=" blue btn waves-effect waves-light" type="submit" name="action">Submit
-                <i class="material-icons right">send</i>
-              </button>
-              <!-- <input class="btn waves-effect waves-light light-blue" id="submit" type="submit" class="validate">
-              <label for="submit"></label> -->
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </div>
+  <% include ../partials/signinform %>
   <!-- sign-in form ends -->
   <!-- login-form starts -->
+
   <!-- login for ends -->
   <br>
   <!-- main container start -->
-  <div class="container blue" id="main-content">
-    <div class="row">
-      <div class="col s4 hoverable">
-        <div class="card z-depth-5">
-          <div class="card-image ">
-            <img class="responsive materialboxed" src="teslamodel3.png">
-
-            <a onclick="M.toast({html: 'I am a toast!', classes: 'rounded'});"
-              class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
-              data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
-          </div>
-          <span class="card-title"> Tesla Model 3 </span>
-          <div class="right">
-            <h5 class="price-tag">$</h5>
-          </div>
-          <div class="card-content">
-            <p>Model 3 comes with the option of dual motor all-wheel drive, 20” Performance Wheels and Brakes and
-              lowered suspension for total control. And a carbon fiber spoiler improves
-              stability at high speeds, all allowing Model 3 to accelerate from 0-60 mph in as little as 3.2 seconds.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col s4 hoverable">
-        <div class="card z-depth-5 ">
-          <div class="card-image ">
-            <img class="responsive materialboxed" src="teslamodelS.jpeg">
-
-            <a onclick="M.toast({html: 'I am a toast'})"
-              class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
-              data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
-
-          </div>
-          <span class="card-title"> Tesla Model S</span>
-          <div class="right">
-            <h5 class="price-tag">$</h5>
-          </div>
-          <div class="card-content">
-            <p>Model S sets an industry standard for performance and safety. Tesla’s all-electric powertrain delivers
-              unparalleled performance in all weather conditions , with Dual Motor All-Wheel Drive, adaptive air
-              suspension and ludicrous acceleration.Let's save fossil fuel.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col s4 hoverable">
-        <div class="card z-depth-5">
-          <div class="card-image ">
-            <img class="responsive materialboxed" src="teslamodelX.jpg">
-
-            <a onclick="M.toast({html: 'I am a toast'})"
-              class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
-              data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
-          </div>
-          <span class="card-title"> Tesla Model X</span>
-          <div class="right">
-            <h5 class="price-tag">$</h5>
-          </div>
-          <div class="card-content">
-            <p>Model X has the most storage room of any SUV in its class, comfortable seating for up to seven adults and
-              the capability to tow up to 5,000 pounds. Falcon Wing doors are equipped with sensors to monitor the
-              proximity of surroundings, and can open in even the tightest parking spaces.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <% include ../partials/container %>
   <!-- main container end -->
   <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      M.AutoInit();
-      $('.sidenav').sidenav();
-    });
-  </script>
+  <% include ../partials/scripts %>
+
 </body>
 
 </html>
