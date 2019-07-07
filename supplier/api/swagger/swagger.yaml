@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Supplier api
 # during dev, should point to your local machine
 host: localhost:5000
 # basePath prefixes all resource paths 
@@ -35,7 +35,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/ProductAmountResponse"
+            $ref: "#/definitions/ProductQtyResponse"
       responses:
         "200":
           description: Success
@@ -123,7 +123,7 @@ definitions:
               type: string
             price:
               type : number
-            amount:
+            qty:
               type: number
             url:
               type: string
@@ -131,7 +131,7 @@ definitions:
     required:
       - name
       - productId
-      - amount
+      - qty
       - price
       - url
     properties:
@@ -141,14 +141,14 @@ definitions:
       productId:
         type: string
         description: task description
-      amount: 
+      qty: 
         type : number
         description: task description
       price:
         type: number
       url:
         type: string
-  ProductAmountResponse:
+  ProductQtyResponse:
     type: object
     properties:
       name:
@@ -157,7 +157,7 @@ definitions:
       productId:
         type: string
         description: task description
-      amount: 
+      qty: 
         type : number
         description: task description
       price:
@@ -165,7 +165,8 @@ definitions:
       url:
         type: string
     required:
-      - amount
+      - productId
+      - qty
   Product:
     type: object
     properties:
@@ -175,7 +176,7 @@ definitions:
       productId:
         type: string
         description: task description
-      amount: 
+      qty: 
         type : number
         description: task description
       price:
@@ -184,7 +185,7 @@ definitions:
         type: string
     required:
       - name
-      - amount
+      - qty
       - price
       - url
       

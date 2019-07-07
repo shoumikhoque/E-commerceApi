@@ -1,0 +1,11 @@
+.container{
+    width:100%;
+    background: blanchedalmond;
+}
+#main-content{
+    background-color: blanchedalmond;
+
+}
+.carousel{
+    widows: parent;
+}

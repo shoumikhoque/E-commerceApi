@@ -8,7 +8,7 @@ function save(req, res, next) {
   let product = {
     name: req.body.name,
     productId: crypto.randomBytes(20).toString("hex"),
-    amount: req.body.amount,
+    qty: req.body.qty,
     price: req.body.price,
     url: req.body.url
   };
@@ -40,7 +40,7 @@ function getAll(req, res, next) {
 function update(req, res, next) {
   var productId = req.swagger.params.productId.value; //req.swagger contains the path parameters
   var product = {
-    amount: req.body.amount
+    qty: req.body.qty
   };
   if (db.update(productId, product)) {
     res.json({

@@ -1,6 +1,7 @@
 "use strict;";
 //Include crypto to generate the movie email
 var crypto = require("crypto");
+var sha256 = require('js-sha256');
 const mongo = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017";
 const dbName = "ecom";
@@ -9,6 +10,7 @@ module.exports=function(){
     return {
         save(account) {
             account.accId = crypto.randomBytes(20).toString("hex"); // fast enough for our purpose
+            account.pass=sha256(account.pass)
             mongo.connect(url, (err, client) => {
               if (err) {
                 console.error(err);

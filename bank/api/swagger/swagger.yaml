@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Bank Api
 # during dev, should point to your local machine
 host: localhost:4000
 # basePath prefixes all resource paths 
@@ -190,6 +190,7 @@ definitions:
       - name
       - pass
       - accNo
+      - balance
     properties:
       name: 
         type: string
@@ -197,6 +198,8 @@ definitions:
         type: string
       accNo:
         type: string
+      balance:
+        type: number
   Account:
     type: object
     properties:
@@ -209,6 +212,8 @@ definitions:
       pass: 
         type : string
         description: task description
+      balance:
+        type: number
     required:
       - name
       - pass
