@@ -18,13 +18,51 @@
         </div>
     </li>
     <div class="divider"></div>
-    </li>
-    <li>
+    <form action="" method="post">
+        <li>
+
+            <div class="row">
+                <div class="col s2">
+                    <input type="number" name="qty1" id="qty1" value=0>
+                    <label for="qty1">QTY</label>
+                </div>
+                <div class="col s7"><%= details.products[0].name %></div>
+                <div class="col s3 right-align" id="val1"><%= details.products[0].price %></div>
+            </div>
+        </li>
+        <li>
+            <div class="row">
+                <div class="col s2">
+                    <input type="number" name="qty2" id="qty2" value=0>
+                    <label for="qty2">QTY</label>
+                </div>
+                <div class="col s7"><%= details.products[1].name %></div>
+                <div class="col s3 right-align" id="val2"><%= details.products[1].price %></div>
+            </div>
+        </li>
+        <li>
+            <div class="row">
+                <div class="col s2">
+                    <input type="number" name="qty3" id="qty3" value=0>
+                    <label for="qty3">QTY</label>
+                </div>
+                <div class="col s7"><%= details.products[2].name %></div>
+                <div class="col s3 right-align" id="val3"><%= details.products[2].price %></div>
+            </div>
+        </li>
+    </form>
+
+    <div class="divider"></div>
+    <form action="" method="post">
         <div class="row">
             <div class="col s2"></div>
-            <div class="col s7">Total</div>
-            <div class="col s3 right-align">price</div>
+            <div class="col s4 btn btn-small hoverable blue">Total</div>
+            <div class="col s6">
+                <input  type="number" name="totalprice"  id="totalprice" value=0>
+                <label for="totalprice">QTY</label>
+            </div>
         </div>
+    </form>
     </li>
 </ul>
 <a href="#" data-target="slide-out"
