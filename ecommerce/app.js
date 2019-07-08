@@ -64,7 +64,23 @@ app.get("/", function (req, res) {
   //   }
 
   //  })
-
+  getAllProducts((data) => {
+    if (data) {
+      console.log();
+      var details = req.signedCookies.details;
+      if (details) {
+        details.products = data
+      } else {
+        var details = {
+          products: data
+        }
+      }
+      res.cookie('details', details, cookieOptions)
+      res.render("pages/index", {
+        details: details
+      });
+    }
+  })
   // getAllProducts(data => {
   //   if (data) {
   //     res.render("pages/index", { products: JSON.stringify(data) });
@@ -79,7 +95,7 @@ app.get("/", function (req, res) {
 
 
 
-  res.render("pages/index");
+  // res.render("pages/index");
 
 
 });
@@ -103,35 +119,58 @@ app.post("/signin", (req, res) => {
     console.log("user: ", user);
 
     if (user) {
-      res.cookie('user', JSON.stringify(user), cookieOptions)
+
+      var details = req.signedCookies.details;
+      if (details) {
+        details.user = user
+      } else {
+        var details = {
+          user: user
+        }
+      }
+      res.cookie('details', details, cookieOptions)
       res.render("pages/index", {
-        user: user
+        details: details
       });
+
     }
   })
 })
 app.post("/login", (req, res) => {
-  var user = res.signedCookies.user
-  if (user === null) {
-    var email = req.body.email
-    console.log(email);
-    console.log(req.body.pass);
-    var pass = sha256(req.body.pass)
+  var details = req.signedCookies.details;
+  var email = req.body.email
+  var pass = sha256(req.body.pass)
+  if(details.user){
+    if (details.user.email!==email && details.user.pass!==pass) {
+      loginUser(email, (user) => {
+        if (user) {
+          console.log(user);
+          if (pass === user.pass) {
+            details.user=user
+            res.cookie('details', details, cookieOptions)
+            res.render("pages/index", {
+              details: details
+            });
+          }
+        }
+      })
+    }
+  }
+  else{
     loginUser(email, (user) => {
       if (user) {
         console.log(user);
         if (pass === user.pass) {
-          res.cookie('user', user, cookieOptions)
+          details.user=user
+          res.cookie('details', details, cookieOptions)
           res.render("pages/index", {
-            user: user
+            details: details
           });
         }
       }
     })
   }
-  res.render("pages/index", {
-    user: user
-  })
+  
 
 })
 

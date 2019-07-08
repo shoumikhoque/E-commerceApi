@@ -1,8 +1,15 @@
 <div class="nav-wrapper blue z-depth-3">
-  <a href="#" class="brand-logo center large">E-commerce API </a>
+  <a href="#" class="brand-logo center large">E-commerce API</a>
   <ul id="nav-mobile" class="right">
     <li><a href="#login" data-target="login"
         class=" z-depth-5 light-blue btn btn-large waves-effect waves-light modal-trigger tooltipped"
-        data-tooltip="Account" data-position="bottom"><i class="large material-icons">account_circle</i></a></li>
+        data-tooltip="Account" data-position="bottom">
+        <% if (!details.user) { %>
+        <i class="large material-icons"> account_circle</i>
+        <% } %>
+        <% if (details.user) { %>
+        <%= details.user.name %>
+        <% } %>
+      </a></li>
   </ul>
 </div>

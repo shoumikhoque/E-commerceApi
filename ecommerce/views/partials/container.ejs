@@ -3,20 +3,18 @@
     <div class="col s4 hoverable">
       <div class="card z-depth-5">
         <div class="card-image ">
-          <img class="responsive materialboxed" src="teslamodel3.png">
+          <img class="responsive materialboxed" src="<%= details.products[0].url %>">
 
           <a onclick="M.toast({html: 'I am a toast!', classes: 'rounded'});"
             class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
             data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
         </div>
-        <span class="card-title"> Tesla Model 3 </span>
+        <span class="card-title"><%= details.products[0].name %></span>
         <div class="right">
-          <h5 class="price-tag">$</h5>
+          <h5 class="price-tag"><%= details.products[0].price %>$</h5>
         </div>
         <div class="card-content">
-          <p>Model 3 comes with the option of dual motor all-wheel drive, 20” Performance Wheels and Brakes and
-            lowered suspension for total control. And a carbon fiber spoiler improves
-            stability at high speeds, all allowing Model 3 to accelerate from 0-60 mph in as little as 3.2 seconds.
+          <p><%= details.products[0].details %>
           </p>
         </div>
       </div>
@@ -24,43 +22,64 @@
     <div class="col s4 hoverable">
       <div class="card z-depth-5 ">
         <div class="card-image ">
-          <img class="responsive materialboxed" src="teslamodelS.jpeg">
+          <img class="responsive materialboxed" src="<%= details.products[1].url %>">
 
           <a onclick="M.toast({html: 'I am a toast'})"
             class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
             data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
 
         </div>
-        <span class="card-title"> Tesla Model S</span>
+        <span class="card-title"><%= details.products[1].name %> </span>
         <div class="right">
-          <h5 class="price-tag">$</h5>
+          <h5 class="price-tag"><%= details.products[1].price %>$</h5>
         </div>
         <div class="card-content">
-          <p>Model S sets an industry standard for performance and safety. Tesla’s all-electric powertrain delivers
-            unparalleled performance in all weather conditions , with Dual Motor All-Wheel Drive, adaptive air
-            suspension and ludicrous acceleration.Let's save fossil fuel.</p>
+          <p><%= details.products[1].details %></p>
         </div>
       </div>
     </div>
     <div class="col s4 hoverable">
       <div class="card z-depth-5">
         <div class="card-image ">
-          <img class="responsive materialboxed" src="teslamodelX.jpg">
+          <img class="responsive materialboxed" src="<%= details.products[2].url %>">
 
           <a onclick="M.toast({html: 'I am a toast'})"
             class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
             data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
         </div>
-        <span class="card-title"> Tesla Model X</span>
+        <span class="card-title"><%= details.products[2].name %></span>
         <div class="right">
-          <h5 class="price-tag">$</h5>
+          <h5 class="price-tag"><%= details.products[2].price %>$</h5>
         </div>
         <div class="card-content">
-          <p>Model X has the most storage room of any SUV in its class, comfortable seating for up to seven adults and
+          <p><%= details.products[2].details %></p>
+          <!-- <p>Model X has the most storage room of any SUV in its class, comfortable seating for up to seven adults and
             the capability to tow up to 5,000 pounds. Falcon Wing doors are equipped with sensors to monitor the
-            proximity of surroundings, and can open in even the tightest parking spaces.</p>
+            proximity of surroundings, and can open in even the tightest parking spaces.</p> -->
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- <% for(var i = 0; i < details.products.length; i++) { %>
+  <div class="col s4 hoverable">
+      <div class="card z-depth-5">
+        <div class="card-image ">
+          <img class="responsive materialboxed" src="teslamodel3.png">
+
+          <a onclick="M.toast({html: 'I am a toast!', classes: 'rounded'});"
+            class="btn-floating halfway-fab waves-effect waves-light red btn-floating pulse tooltipped"
+            data-tooltip="Add to cart" data-position="top"><i class="material-icons">add</i></a>
+        </div>
+        <span class="card-title"><%= details.products[i].name %></span>
+        <div class="right">
+          <h5 class="price-tag"><%= details.products[i].price %>$</h5>
+        </div>
+        <div class="card-content">
+          <p><%= details.products[i].details %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% } %> -->
