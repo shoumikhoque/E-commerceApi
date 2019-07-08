@@ -187,7 +187,6 @@ definitions:
         type: string
   GetAccountResponse:
     required:
-      - name
       - pass
       - accNo
       - balance
@@ -215,7 +214,7 @@ definitions:
       balance:
         type: number
     required:
-      - name
+      
       - pass
 
   Transaction:

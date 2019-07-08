@@ -136,17 +136,39 @@ app.post("/signin", (req, res) => {
     }
   })
 })
+app.post('/accNo', (req, res) => {
+  var details = req.signedCookies.details;
+  var account = {
+    accNo: req.body.accNo,
+    pass: sha256(req.body.pass)
+  }
+  getAccount(req.body.accNo, (acc) => {
+    if (acc) {
+      console.log(acc);
+      if (acc.pass == account.pass) {
+        
+        
+        details.acc = acc
+        res.cookie('details', details, cookieOptions)
+        res.render("pages/index", {
+          details: details
+        });
+      }
+    }
+  })
+
+})
 app.post("/login", (req, res) => {
   var details = req.signedCookies.details;
   var email = req.body.email
   var pass = sha256(req.body.pass)
-  if(details.user){
-    if (details.user.email!==email && details.user.pass!==pass) {
+  if (details.user) {
+    if (details.user.email !== email && details.user.pass !== pass) {
       loginUser(email, (user) => {
         if (user) {
           console.log(user);
           if (pass === user.pass) {
-            details.user=user
+            details.user = user
             res.cookie('details', details, cookieOptions)
             res.render("pages/index", {
               details: details
@@ -155,13 +177,12 @@ app.post("/login", (req, res) => {
         }
       })
     }
-  }
-  else{
+  } else {
     loginUser(email, (user) => {
       if (user) {
         console.log(user);
         if (pass === user.pass) {
-          details.user=user
+          details.user = user
           res.cookie('details', details, cookieOptions)
           res.render("pages/index", {
             details: details
@@ -170,7 +191,7 @@ app.post("/login", (req, res) => {
       }
     })
   }
-  
+
 
 })
 
@@ -227,6 +248,19 @@ function loginUser(email, cb) {
   p.then(function (data) {
     cb(data);
   });
+}
+
+function getAccount(accNo, cb) {
+  var p = new Promise(function (resolve, reject) {
+    axios.get("http://localhost:4000/account/" + accNo).then(function (response) {
+      // console.log(response.data);
+      resolve(response.data);
+    });
+  });
+  p.then(function (data) {
+    cb(data);
+  });
+
 }
 
 function sendPurchaseReq(cart, cb) {
