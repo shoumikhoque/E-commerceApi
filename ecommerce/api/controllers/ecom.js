@@ -23,6 +23,9 @@ function save(req, res, next) {
     //   accNo: crypto.randomBytes(20).toString("hex"),
     //   pass: req.body.pass
     // };
+    console.log("sent register data "+JSON.stringify(req.body));
+    
+    
     res.json({
       success: db.save(req.body),
       description: "account added to the list!"

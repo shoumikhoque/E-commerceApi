@@ -1,0 +1,37 @@
+<div id="login" class="modal">
+    <div class="modal-content">
+        <div class='center'>
+            <h5 class="btn blue btn-large disabled waves-effect waves-light">Log In</h5>
+        </div>
+        <div class="row">
+            <form class="col s12"  action="/login" method="POST">
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" class="validate" name="email">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" name="pass">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="row right-align">
+                    <div class="input-field col s12">
+                        <button class=" blue btn waves-effect waves-light" type="submit" >Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+            <div class="center">
+                    <h6>Don't have any account?</h6>
+                    <a href="#SignIn" class ="z-depth-5 cyan btn waves-effect waves-light modal-trigger" data-target="SignIn">Register</a>
+            </div>
+            
+        </div>
+    </div>
+</div>

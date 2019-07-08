@@ -76,14 +76,17 @@ definitions:
       pass: 
         type : string
         description: task description
-      bankAccNo: 
+      contact: 
         type : string
         description: task description
+      address: 
+        type : string
     required:
       - name
       - pass
       - email
-      - bankAccNo
+      - contact
+      - address
   GeneralResponse:
     type: object
     properties:
@@ -105,7 +108,6 @@ definitions:
         type: string
       pass:
         type: string
-      
       email:
         type: string
   ErrorResponse:

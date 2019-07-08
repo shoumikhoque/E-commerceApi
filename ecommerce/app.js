@@ -1,10 +1,17 @@
-"use strict";
+// "use strict";
 var http = require("http");
 var SwaggerExpress = require("swagger-express-mw");
 var express = require("express");
 var app = express();
 var axios = require("axios");
 var bodyParser = require("body-parser");
+var sha256 = require('js-sha256');
+var cookieParser = require('cookie-parser');
+var cookieOptions = {
+  signed: true,
+  maxAge: 3000000
+};
+app.use(cookieParser('prime'));
 module.exports = app; // for testing
 app.use(express.json());
 app.use(
@@ -18,16 +25,19 @@ var config = {
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/views/images"));
-console.log(__dirname );
+console.log(__dirname);
 
 app.use(express.static(__dirname + "/"));
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
+  var user = req.signedCookies.user
+
+
   // var product = {
   //   name: "Tesla_Model_3",
   //   qty: 102,
   //   productId: "9102057051adbbde0c92aa69a96cbaa80b09a332"
   // };
-  
+
   // putProduct(product,2,(data)=>{
   //   if(data){
   //     res.render("pages/index", { user: JSON.stringify(data) });
@@ -47,118 +57,164 @@ app.get("/", function(req, res) {
   //   }
   // });
 
-  // var form={
-  //   name: "yeahea",
-  //   email: "jdsjhdka@gamil.com",
-  //   pass:"hdsjkdasd",
-  //   bankAccNo:"jdjsadjksajk"
-  // }
+
   // registerUser(form,(data)=>{
   //   if(data){
   //     res.render("pages/index", { user: JSON.stringify(data) });
   //   }
 
-  // })
+  //  })
+
   // getAllProducts(data => {
   //   if (data) {
-  //     res.render("pages/index", { user: JSON.stringify(data) });
+  //     res.render("pages/index", { products: JSON.stringify(data) });
   //   }
   // });
   // getProductDetails("adc19c5317806fa3d21374dc63d4f2fa80f7cc64",function(data){
 
   // })
-  res.render("pages/index", { user: "shoumik" });
-});
 
-SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) {
-    throw err;
+
+  // res.render("pages/index")
+
+
+
+  res.render("pages/index");
+
+
+});
+app.post("/signin", (req, res) => {
+  var user = req.signedCookies.user
+  console.log("from cookie: " + user.name);
+
+  var form = {
+    name: req.body.name,
+    email: req.body.email,
+    pass: req.body.pass,
+    contact: req.body.contact,
+    address: req.body.address
   }
 
-  // install middleware
-  swaggerExpress.register(app);
 
-  var port = process.env.PORT || 3000;
-  app.listen(port);
+  // console.log(form);
+  // Cookies that have not been signed
 
-  if (swaggerExpress.runner.swagger.paths["/hello"]) {
-    console.log(
-      "try this:\ncurl http://127.0.0.1:" + port + "/hello?name=Scott"
-    );
+  registerUser(form, (user) => {
+    console.log("user: ", user);
+
+    if (user) {
+      res.cookie('user', JSON.stringify(user), cookieOptions)
+      res.render("pages/index", {
+        user: user
+      });
+    }
+  })
+})
+app.post("/login", (req, res) => {
+  var user = res.signedCookies.user
+  if (user === null) {
+    var email = req.body.email
+    console.log(email);
+    console.log(req.body.pass);
+    var pass = sha256(req.body.pass)
+    loginUser(email, (user) => {
+      if (user) {
+        console.log(user);
+        if (pass === user.pass) {
+          res.cookie('user', user, cookieOptions)
+          res.render("pages/index", {
+            user: user
+          });
+        }
+      }
+    })
   }
-});
+  res.render("pages/index", {
+    user: user
+  })
+
+})
+
 
 // apicall functions
 function getProductDetails(productId, cb) {
-  var p = new Promise(function(resolve, reject) {
+  var p = new Promise(function (resolve, reject) {
     axios
       .get("http://localhost:5000/products/" + productId)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response.data);
         resolve(response.data);
       });
   });
-  p.then(function(data) {
+  p.then(function (data) {
     cb(data);
   });
 }
+
 function getAllProducts(cb) {
-  var p = new Promise(function(resolve, reject) {
-    axios.get("http://localhost:5000/products/").then(function(response) {
+  var p = new Promise(function (resolve, reject) {
+    axios.get("http://localhost:5000/products/").then(function (response) {
       console.log(response.data);
       resolve(response.data);
     });
   });
-  p.then(function(data) {
+  p.then(function (data) {
     cb(data);
   });
 }
+
 function registerUser(data, cb) {
-  var p = new Promise(function(resolve, reject) {
-    axios.post("http://localhost:3000/reg", data).then(function(response) {
+  console.log(data);
+
+  var p = new Promise(function (resolve, reject) {
+    axios.post("http://localhost:3000/reg", data).then(function (response) {
+      console.log(response.data);
       resolve(response.data);
     });
   });
-  p.then(function(data) {
+  p.then(function (data) {
     console.log(data);
     cb(data);
   });
 }
+
 function loginUser(email, cb) {
-  var p = new Promise(function(resolve, reject) {
-    axios.get("http://localhost:3000/login/" + email).then(function(response) {
+  var p = new Promise(function (resolve, reject) {
+    axios.get("http://localhost:3000/login/" + email).then(function (response) {
       console.log(response.data);
       resolve(response.data);
     });
   });
-  p.then(function(data) {
+  p.then(function (data) {
     cb(data);
   });
 }
+
 function sendPurchaseReq(cart, cb) {
   for (let i = 0; i < cart.length; i++) {
     var product = cart[i];
   }
 }
 
-function putProduct(product,qty, cb) {
-  var p = new Promise(function(resolve, reject) {
-    product.qty-=qty;
+function putProduct(product, qty, cb) {
+  var p = new Promise(function (resolve, reject) {
+    product.qty -= qty;
     axios
       .put("http://localhost:5000/sendProduct/" + product.productId, product)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response.data);
         resolve(response.data);
       });
   });
-  p.then(function(data) {
+  p.then(function (data) {
     console.log(data);
 
     cb(data);
   });
 }
-function sendMoneyToEcom(){
-  
+
+function sendMoneyToEcom() {
+
 }
 
 // putProduct(product,(data)=>{
@@ -183,3 +239,21 @@ function sendMoneyToEcom(){
 //     productId: "fe044f7ccf40b5ed6a417549340dec426e57588b"
 //   }
 // ];
+
+SwaggerExpress.create(config, function (err, swaggerExpress) {
+  if (err) {
+    throw err;
+  }
+
+  // install middleware
+  swaggerExpress.register(app);
+
+  var port = process.env.PORT || 3000;
+  app.listen(port);
+
+  if (swaggerExpress.runner.swagger.paths["/hello"]) {
+    console.log(
+      "try this:\ncurl http://127.0.0.1:" + port + "/hello?name=Scott"
+    );
+  }
+});
